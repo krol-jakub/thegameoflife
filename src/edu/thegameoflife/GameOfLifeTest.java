@@ -19,7 +19,8 @@ public class GameOfLifeTest {
 	public void someTest() {
 		// given
 		HashMap<Point,Integer> input = new HashMap<Point,Integer>();
-		input.put(new Point(1,1), new Integer(0));
+		input.put(new Point(1,1), new Integer(1));
+		input.put(new Point(2,1), new Integer(1));
 		
 		HashMap<Point,Integer> output = new HashMap<Point,Integer>();
 		

@@ -14,6 +14,9 @@ public class Board {
 		listOfLivingCells = new HashMap<Point,Integer>();
 		listOfNeighbouringCells = new HashMap<Point,Integer>();
 		listOfNeighbouringCellsToBeAlive = new HashMap<Point,Integer>();
+		listOfLivingCells.clear();
+		listOfNeighbouringCells.clear();
+		listOfNeighbouringCellsToBeAlive.clear();
 	}
 	
 	public void fillListOfNeigbouringCellsToBeAlive() {
@@ -24,8 +27,10 @@ public class Board {
 					if(i == 0 && j == 0) {
 						continue;
 					}
-					listOfNeighbouringCells.put(new Point(tmp.getKey().getX()+j, tmp.getKey().getY()+i), 
-							new Integer(countAliveNeighbours(new Point(tmp.getKey().getX()+j, tmp.getKey().getY()+i))));
+					if(listOfLivingCells.keySet().contains(new Point(1,1))) {
+						listOfNeighbouringCells.put(new Point(tmp.getKey().getX()+j, tmp.getKey().getY()+i), 
+								countAliveNeighbours(new Point(tmp.getKey().getX()+j, tmp.getKey().getY()+i)));						
+					}
 				}	
 			}
 		}

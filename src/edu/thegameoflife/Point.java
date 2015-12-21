@@ -17,6 +17,11 @@ public class Point {
 		this.x = key.getX();
 		this.y = key.getY();
 	}
+	
+	public Point(Point key, int x_offset, int y_offset) {
+		this.x = key.getX() + x_offset;
+		this.y = key.getY() + y_offset;
+	}
 
 	public int getX() {
 		return x;
@@ -32,6 +37,10 @@ public class Point {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+	
+	public boolean equals(Object o) {
+		return false;
 	}
 
 }
