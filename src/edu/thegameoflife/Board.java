@@ -8,18 +8,15 @@ public class Board {
 
 	HashMap<Point,Integer> listOfLivingCells;
 	HashMap<Point,Integer> listOfNeighbouringCells;
-	HashMap<Point,Integer> listOfNeighbouringCellsToBeAlive;
 	
 	public Board() {
 		listOfLivingCells = new HashMap<Point,Integer>();
 		listOfNeighbouringCells = new HashMap<Point,Integer>();
-		listOfNeighbouringCellsToBeAlive = new HashMap<Point,Integer>();
 		listOfLivingCells.clear();
 		listOfNeighbouringCells.clear();
-		listOfNeighbouringCellsToBeAlive.clear();
 	}
 	
-	public void fillListOfNeigbouringCellsToBeAlive() {
+	public void fillListOfNeigbouringCells() {
 		for(final Iterator<Entry<Point, Integer>> it = listOfLivingCells.entrySet().iterator() ; it.hasNext() ; ) {
 			Entry<Point, Integer> tmp = it.next();
 			for(int i = -1 ; i <= 1 ; ++i) {
@@ -27,9 +24,9 @@ public class Board {
 					if(i == 0 && j == 0) {
 						continue;
 					}
-					if(listOfLivingCells.keySet().contains(new Point(1,1))) {
+					if(!listOfLivingCells.keySet().contains(new Point(tmp.getKey(),j,i))) {
 						listOfNeighbouringCells.put(new Point(tmp.getKey().getX()+j, tmp.getKey().getY()+i), 
-								countAliveNeighbours(new Point(tmp.getKey().getX()+j, tmp.getKey().getY()+i)));						
+								new Integer(countAliveNeighbours(new Point(tmp.getKey().getX()+j, tmp.getKey().getY()+i))));						
 					}
 				}	
 			}
@@ -43,12 +40,36 @@ public class Board {
 				if(i == 0 && j == 0) {
 					continue;
 				}
-				if(listOfLivingCells.containsKey(new Point(point.getX()+j, point.getY()+i))) {
+				if(listOfLivingCells.containsKey(new Point(point,j,i))) {
 					++aliveNeighbours;
 				}
 			}	
 		}
 		return aliveNeighbours;
+	}
+	
+	public int countAliveNeighboursWithHashmap(Point point, HashMap<Point,Integer> map) {
+		int aliveNeighbours = 0;
+		for(int i = -1 ; i <= 1 ; ++i) {
+			for(int j = -1 ; j <= 1 ; ++j) {
+				if(i == 0 && j == 0) {
+					continue;
+				}
+				if(map.containsKey(new Point(point,j,i))) {
+					++aliveNeighbours;
+				}
+			}	
+		}
+		return aliveNeighbours;
+	}
+	
+	public HashMap<Point,Integer> recountAliveNeighbours(HashMap<Point,Integer> list) {
+		HashMap<Point,Integer> resultMap = new HashMap<Point,Integer>();
+		for(final Iterator<Entry<Point, Integer>> it = list.entrySet().iterator() ; it.hasNext() ; ) {
+			Entry<Point, Integer> tmp = it.next();
+			resultMap.put(tmp.getKey(), countAliveNeighboursWithHashmap(tmp.getKey(),list));
+		}
+		return resultMap;
 	}
 	
 	public HashMap<Point, Integer> getListOfLivingCells() {
@@ -65,14 +86,6 @@ public class Board {
 
 	public void setListOfNeighbouringCells(HashMap<Point, Integer> listOfNeighbouringCells) {
 		this.listOfNeighbouringCells = listOfNeighbouringCells;
-	}
-
-	public HashMap<Point, Integer> getListOfNeighbouringCellsToBeAlive() {
-		return listOfNeighbouringCellsToBeAlive;
-	}
-
-	public void setListOfNeighbouringCellsToBeAlive(HashMap<Point, Integer> listOfNeighbouringCellsToBeAlive) {
-		this.listOfNeighbouringCellsToBeAlive = listOfNeighbouringCellsToBeAlive;
 	}
 
 }

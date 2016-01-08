@@ -39,8 +39,36 @@ public class Point {
 		this.y = y;
 	}
 	
+	@Override
 	public boolean equals(Object o) {
+		if(this == o) {
+			return true;
+		}
+		
+		if(o == null) {
+			return false;
+		}
+		
+		if(this.getClass() != o.getClass()) {
+			return false;
+		}
+		
+		final Point point = (Point) o;
+		
+		if(this.getX() == point.getX() && this.getY() == point.getY()) {
+			return true;
+		}
 		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		int multiplier = 5;
+		
+		hash = multiplier * this.getX() + multiplier * this.getY() + 273;
+		
+		return hash;
 	}
 
 }

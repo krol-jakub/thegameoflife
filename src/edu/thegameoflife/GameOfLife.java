@@ -14,24 +14,28 @@ public class GameOfLife {
 	
 	public HashMap<Point,Integer> playNextRound(HashMap<Point,Integer> inputList) {
 		gameBoard.setListOfLivingCells(inputList);
-		gameBoard.fillListOfNeigbouringCellsToBeAlive();
+		gameBoard.fillListOfNeigbouringCells();
 		
-		//System.out.println(gameBoard.getListOfNeighbouringCells());
-		System.out.println(gameBoard.getListOfLivingCells());
-		System.out.println(new Point(1,1));
-		//System.out.println(gameBoard.getListOfNeighbouringCells().size());
+		HashMap<Point,Integer> outputList = new HashMap<Point,Integer>();
+		outputList.clear();
 		
-		/*for(final Iterator<Entry<Point, Integer>> it = gameBoard.getListOfLivingCells().entrySet().iterator() ; it.hasNext() ; ) {
+		for(final Iterator<Entry<Point, Integer>> it = gameBoard.getListOfLivingCells().entrySet().iterator() ; it.hasNext() ; ) {
 			Entry<Point, Integer> tmp = it.next();
-			System.out.println(String.format("(%1$d,%2$d), neighbours: %3$d", tmp.getKey().getX(), tmp.getKey().getY(), tmp.getValue()));
+			if(tmp.getValue() == 2 || tmp.getValue() == 3) {
+				outputList.put(tmp.getKey(), tmp.getValue());
+			}
 		}
-		System.out.println("--------------------------------------------------------");
+		
 		for(final Iterator<Entry<Point, Integer>> it = gameBoard.getListOfNeighbouringCells().entrySet().iterator() ; it.hasNext() ; ) {
 			Entry<Point, Integer> tmp = it.next();
-			System.out.println(String.format("(%1$d,%2$d), neighbours: %3$d", tmp.getKey().getX(), tmp.getKey().getY(), tmp.getValue()));
-		}*/
+			if(tmp.getValue() == 3) {
+				outputList.put(tmp.getKey(), tmp.getValue());
+			}
+		}
 		
-		return inputList;
+		outputList = gameBoard.recountAliveNeighbours(outputList);
+				
+		return outputList;
 	}
 
 	public Board getGameBoard() {
