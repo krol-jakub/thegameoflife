@@ -66,7 +66,7 @@ public class Point {
 		int hash = 0;
 		int multiplier = 5;
 		
-		hash = multiplier * this.getX() + multiplier * this.getY() + 273;
+		hash = (int) (multiplier * this.getX() + Math.pow(multiplier, 2) * this.getY() + 273);
 		
 		return hash;
 	}

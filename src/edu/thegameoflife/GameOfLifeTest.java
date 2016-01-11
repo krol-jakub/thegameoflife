@@ -56,6 +56,31 @@ public class GameOfLifeTest {
 	}
 	
 	@Test
+	public void shouldHandleStreetlightLoopedFewTimes() {
+		// given
+		HashMap<Point,Integer> input = new HashMap<Point,Integer>();
+		input.put(new Point(1,1), new Integer(1));
+		input.put(new Point(2,1), new Integer(2));
+		input.put(new Point(3,1), new Integer(1));
+		
+		HashMap<Point,Integer> output = new HashMap<Point,Integer>();
+		HashMap<Point,Integer> expectedOutput = new HashMap<Point,Integer>();
+		expectedOutput.put(new Point(2,0), new Integer(1));
+		expectedOutput.put(new Point(2,1), new Integer(2));
+		expectedOutput.put(new Point(2,2), new Integer(1));
+		
+		// when
+		output = game.playNextRound(input);
+		for(int i = 0 ; i < 10 ; ++i) {
+			output = game.playNextRound(output);			
+		}
+		
+		// then
+		Assert.assertEquals(output, expectedOutput);
+		//Assert.assertEquals(output, input);
+	}
+	
+	@Test
 	public void shouldHandleGlider() {
 		// given
 		HashMap<Point,Integer> input = new HashMap<Point,Integer>();

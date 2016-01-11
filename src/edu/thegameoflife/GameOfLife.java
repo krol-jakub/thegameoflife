@@ -13,6 +13,8 @@ public class GameOfLife {
 	}
 	
 	public HashMap<Point,Integer> playNextRound(HashMap<Point,Integer> inputList) {
+		gameBoard.getListOfLivingCells().clear();
+		gameBoard.getListOfNeighbouringCells().clear();
 		gameBoard.setListOfLivingCells(inputList);
 		gameBoard.fillListOfNeigbouringCells();
 		
